@@ -62,7 +62,7 @@ const getArticleListSearch = async (
             count: 100,
             attributes:
               'D,CC,AA.DAuN,AA.AuId,DN,Id,S,F.DFN,F.FId,FP,J.JId,J.JN,IA,FamId',
-            'subscription-key': 'fe20f3c2bcfa444d97e94a36b3af07c8',
+            'subscription-key': process.env.API_KEY,
           },
         }
       )
