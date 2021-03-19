@@ -29,7 +29,8 @@ export const PlotTooltip: React.FC<PlotTooltipProps> = (
 
   return data ? (
     <View
-      maxWidth={'size-3000'}
+      width={'size-3000'}
+      minHeight={'size-300'}
       UNSAFE_style={{
         backgroundColor: 'rgba(255,255,255, 0.5)',
         padding: '1rem',
@@ -37,7 +38,7 @@ export const PlotTooltip: React.FC<PlotTooltipProps> = (
       }}
     >
       <Heading level={5} margin={'size-0'}>
-        {data.article.name}
+        {data.article?.name}
       </Heading>
     </View>
   ) : null;

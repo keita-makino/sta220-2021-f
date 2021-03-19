@@ -21,7 +21,7 @@ import {
   externalToInternalTemporal,
   internalToMutation,
 } from '../../utils';
-import { union, unionBy } from 'lodash';
+import { union, unionBy, uniqBy } from 'lodash';
 
 export type SearchFooterProps = {};
 
@@ -34,7 +34,9 @@ const onClick = (
 ) => {
   return async () => {
     const filteredArray = list.filter((item) => selected.includes(item.Id));
-    const internalArrayTemporal = externalToInternalTemporal(filteredArray);
+    const internalArrayTemporal = externalToInternalTemporal(
+      uniqBy(filteredArray, 'Id')
+    );
     articlesFetchedVar(
       unionBy(internalArrayTemporal, articlesFetchedVar(), 'id')
     );

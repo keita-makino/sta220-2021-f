@@ -29,14 +29,11 @@ export const usePlotData = (
   useEffect(() => {
     if (plotLaunch > currentLaunch) {
       const fetch = async () => {
-        const response = await axios.post(
-          'https://sta220-2021-f.herokuapp.com/kmeans',
-          {
-            data: {
-              k: paramKVar(),
-            },
-          }
-        );
+        const response = await axios.post('http://localhost:4000/kmeans', {
+          data: {
+            k: paramKVar(),
+          },
+        });
         setValue(response.data);
         setcurrentLaunch(plotLaunch);
       };

@@ -11,6 +11,7 @@ import {
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { Flex, Grid } from '@react-spectrum/layout';
 import MagicWand from '@spectrum-icons/workflow/MagicWand';
+import { capitalize } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Scrollbar from 'react-scrollbars-custom';
 import {
@@ -159,7 +160,10 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
                       <ActionButton
                         onPressEnd={() => onClick('journal', article.journal!)}
                       >
-                        {article.journal.name}
+                        {article.journal.name
+                          .split(' ')
+                          .map((item: string) => capitalize(item))
+                          .join(' ')}
                       </ActionButton>
                     </View>
                   </>

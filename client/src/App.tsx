@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Index } from './pages/Index';
 import { ApolloProvider } from './ApolloProvider';
@@ -8,8 +7,11 @@ import { defaultTheme, darkTheme } from '@adobe/react-spectrum';
 import { hot } from 'react-hot-loader';
 import { useReactiveVar } from '@apollo/client';
 import { isDarkVar } from './localState';
+import dotenv from 'dotenv';
 
 function App() {
+  dotenv.config();
+
   const isDark = useReactiveVar(isDarkVar);
   return (
     <ApolloProvider>

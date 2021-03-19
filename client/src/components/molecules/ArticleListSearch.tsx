@@ -40,7 +40,6 @@ const onClick = (id?: string) => {
 const getArticleListSearch = async (
   options: SearchOption
 ): Promise<ArticleExternal[]> => {
-  console.log(process.env);
   if (options && Object.values(options).filter((item) => item).length > 0) {
     const core = `${
       options.author
@@ -62,7 +61,7 @@ const getArticleListSearch = async (
             count: 100,
             attributes:
               'D,CC,AA.DAuN,AA.AuId,DN,Id,S,F.DFN,F.FId,FP,J.JId,J.JN,IA,FamId',
-            'subscription-key': process.env.API_KEY,
+            'subscription-key': process.env.REACT_APP_API_KEY,
           },
         }
       )

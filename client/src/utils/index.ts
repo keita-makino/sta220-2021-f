@@ -94,7 +94,8 @@ export const internalToMutation = (
 async function createEmbedding(abstractTextArray: string[]) {
   return (
     await Axios.post(
-      process.env.FUNCTION_URL || 'http://localhost:7071/api/HttpTrigger1',
+      process.env.REACT_APP_FUNCTION_URL ||
+        'http://localhost:7071/api/HttpTrigger1',
       abstractTextArray
     )
   ).data;

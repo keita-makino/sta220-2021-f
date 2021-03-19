@@ -19,7 +19,7 @@ const cache = new InMemoryCache({
   },
 });
 const link = new HttpLink({
-  uri: 'https://sta220-2021-f.herokuapp.com/graphql',
+  uri: 'http://localhost:4000/graphql',
 });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({

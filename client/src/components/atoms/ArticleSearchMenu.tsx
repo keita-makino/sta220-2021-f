@@ -49,7 +49,10 @@ export const ArticleSearchMenu: React.FC<ArticleSearchMenuProps> = (
       setArray(
         data[`${props.type}s`].map((item: any) => ({
           value: item.id,
-          label: item.name,
+          label: item.name
+            .split(' ')
+            .map((item: string) => capitalize(item))
+            .join(' '),
         }))
       );
     }

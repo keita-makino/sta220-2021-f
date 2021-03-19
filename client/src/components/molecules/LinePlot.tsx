@@ -1,12 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
 import { ResponsiveLine } from '@nivo/line';
-import { max, min } from 'lodash';
-import React, { useState } from 'react';
-import {
-  currentIndexVar,
-  isDarkVar,
-  selectedArticlesOnDatabaseVar,
-} from '../../localState';
+import { max } from 'lodash';
+import React from 'react';
+import { isDarkVar } from '../../localState';
 
 export type LinePlotProps = { data: any };
 
@@ -16,7 +12,7 @@ export const LinePlot: React.FC<LinePlotProps> = (props: LinePlotProps) => {
       id: 'prl',
       data: props.data.prl.map((item: any, index: any) => ({
         x: index + 1,
-        y: item * 100,
+        y: Math.round(item * 10000) / 100,
       })),
     },
   ];
@@ -50,6 +46,7 @@ export const LinePlot: React.FC<LinePlotProps> = (props: LinePlotProps) => {
         theme={{
           textColor: isDark ? '#DDDDDD' : '#333333',
         }}
+        useMesh={true}
       />
     </>
   );
