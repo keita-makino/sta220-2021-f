@@ -7,7 +7,7 @@ export const ArticleTitle: React.FC<ArticleTitleProps> = (
   props: ArticleTitleProps
 ) => {
   return (
-    <View alignSelf={'center'}>
+    <View>
       <Heading level={2} margin={'size-0'}>
         {props.text}
       </Heading>

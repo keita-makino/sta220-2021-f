@@ -92,16 +92,9 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
       );
     },
   });
-  const isLoading = useReactiveVar(isLoadingVar)['articleDetails'];
   const [isFetching, setIsFetching] = useState(false);
 
   const [article, setArticle] = useState<ArticleInternal | null>(null);
-  useEffect(() => {
-    isLoadingVar({
-      ...isLoadingVar(),
-      articleDetails: selectedArticles.length !== 0,
-    });
-  }, [selectedArticles]);
 
   useEffect(() => {
     if (data) {
@@ -115,115 +108,113 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
   }, [current, data, isFetching]);
 
   return (
-    <LoadedScreen loading={isLoading}>
-      <Grid height={'100%'}>
-        {article ? (
-          <Grid rows={['size-800', '0.5rem', 'auto']} width={'100%'}>
-            <ArticleHeader
-              {...article}
-              isFetching={isFetching}
-              setIsFetching={setIsFetching}
-            />
-            <Divider size={'S'} />
-            <Scrollbar>
-              <Grid
-                width={'100%'}
-                columns={['size-2000', 'auto']}
-                columnGap={'size-200'}
-                rowGap={'size-100'}
-                UNSAFE_style={{ overflowY: 'hidden' }}
-                marginTop={'size-200'}
-                marginBottom={'size-200'}
+    <Grid height={'100%'}>
+      {article ? (
+        <Flex width={'100%'} direction={'column'} gap={'size-150'}>
+          <ArticleHeader
+            {...article}
+            isFetching={isFetching}
+            setIsFetching={setIsFetching}
+          />
+          <Divider size={'S'} />
+          <Scrollbar>
+            <Grid
+              width={'100%'}
+              columns={['size-2000', 'auto']}
+              columnGap={'size-200'}
+              rowGap={'size-100'}
+              UNSAFE_style={{ overflowY: 'hidden' }}
+              marginTop={'size-200'}
+              marginBottom={'size-200'}
+            >
+              <View
+                alignSelf={'center'}
+                UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
               >
-                <View
-                  alignSelf={'center'}
-                  UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
-                >
-                  ID:
-                </View>
-                <View>{article.id}</View>
-                <View
-                  alignSelf={'center'}
-                  UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
-                >
-                  Authors:
-                </View>
-                <Flex gap={'size-50'} wrap>
-                  {article.authors.map((item: any) => (
-                    <ActionButton onPressEnd={() => onClick('author', item)}>
-                      {item.name}
-                    </ActionButton>
-                  ))}
-                </Flex>
-                {article.journal ? (
-                  <>
-                    <View
-                      alignSelf={'center'}
-                      UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+                ID:
+              </View>
+              <View>{article.id}</View>
+              <View
+                alignSelf={'center'}
+                UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+              >
+                Authors:
+              </View>
+              <Flex gap={'size-50'} wrap>
+                {article.authors.map((item: any) => (
+                  <ActionButton onPressEnd={() => onClick('author', item)}>
+                    {item.name}
+                  </ActionButton>
+                ))}
+              </Flex>
+              {article.journal ? (
+                <>
+                  <View
+                    alignSelf={'center'}
+                    UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+                  >
+                    Journal:
+                  </View>
+                  <View>
+                    <ActionButton
+                      onPressEnd={() => onClick('journal', article.journal!)}
                     >
-                      Journal:
-                    </View>
-                    <View>
-                      <ActionButton
-                        onPressEnd={() => onClick('journal', article.journal!)}
-                      >
-                        {article.journal.name
-                          .split(' ')
-                          .map((item: string) => capitalize(item))
-                          .join(' ')}
-                      </ActionButton>
-                    </View>
-                  </>
-                ) : null}
-                <View
-                  alignSelf={'center'}
-                  UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
-                >
-                  Publish Date:
-                </View>
-                <View>{new Date(article.date).toLocaleDateString()}</View>
-                <View
-                  alignSelf={'center'}
-                  UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
-                >
-                  Tags:
-                </View>
-                <Flex gap={'size-50'} wrap>
-                  {article.tags.map((item: any) => (
-                    <ActionButton onPressEnd={() => onClick('tag', item)}>
-                      {item.name}
+                      {article.journal.name
+                        .split(' ')
+                        .map((item: string) => capitalize(item))
+                        .join(' ')}
                     </ActionButton>
-                  ))}
-                </Flex>
-                <View
-                  alignSelf={'center'}
-                  UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
-                >
-                  Num. of Citations:
-                </View>
-                <View>{article.citation}</View>
-                <View UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}>
-                  Abstract:
-                </View>
-                <View UNSAFE_style={{ textAlign: 'justify' }}>
-                  {article.abstract}
-                </View>
-              </Grid>
-            </Scrollbar>
-          </Grid>
-        ) : (
-          <Grid>
-            <Flex width={'100%'} justifyContent={'center'} alignSelf={'center'}>
-              <IllustratedMessage>
-                <MagicWand color={'informative'} size={'XXL'} />
-                <Heading>Welcome!</Heading>
-                <Text>Select a question from the side bar to proceed.</Text>
-              </IllustratedMessage>
-            </Flex>
-          </Grid>
-        )}
-      </Grid>
-    </LoadedScreen>
+                  </View>
+                </>
+              ) : null}
+              <View
+                alignSelf={'center'}
+                UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+              >
+                Publish Date:
+              </View>
+              <View>{new Date(article.date).toLocaleDateString()}</View>
+              <View
+                alignSelf={'center'}
+                UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+              >
+                Tags:
+              </View>
+              <Flex gap={'size-50'} wrap>
+                {article.tags.map((item: any) => (
+                  <ActionButton onPressEnd={() => onClick('tag', item)}>
+                    {item.name}
+                  </ActionButton>
+                ))}
+              </Flex>
+              <View
+                alignSelf={'center'}
+                UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}
+              >
+                Num. of Citations:
+              </View>
+              <View>{article.citation}</View>
+              <View UNSAFE_style={{ fontWeight: 700, textAlign: 'right' }}>
+                Abstract:
+              </View>
+              <View UNSAFE_style={{ textAlign: 'justify' }}>
+                {article.abstract}
+              </View>
+            </Grid>
+          </Scrollbar>
+        </Flex>
+      ) : (
+        <Grid>
+          <Flex width={'100%'} justifyContent={'center'} alignSelf={'center'}>
+            <IllustratedMessage>
+              <MagicWand color={'informative'} size={'XXL'} />
+              <Heading>Welcome!</Heading>
+              <Text>Select a question from the side bar to proceed.</Text>
+            </IllustratedMessage>
+          </Flex>
+        </Grid>
+      )}
+    </Grid>
   );
 };
 ArticleDetails.defaultProps = defaultValue;

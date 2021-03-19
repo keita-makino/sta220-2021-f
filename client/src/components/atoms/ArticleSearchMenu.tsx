@@ -77,6 +77,7 @@ export const ArticleSearchMenu: React.FC<ArticleSearchMenuProps> = (
                 )?.label,
                 value: selected[props.type as keyof typeof selected],
               }}
+              isClearable={true}
               options={array}
               onChange={(key) => {
                 if (key) {
@@ -88,6 +89,12 @@ export const ArticleSearchMenu: React.FC<ArticleSearchMenuProps> = (
                       .articles.map((item: any) => item.id),
                   });
                   currentIndexVar(0);
+                } else {
+                  selectedFilterVar({ ...selected, [props.type]: undefined });
+                  queryForArticleFetchVar({
+                    ...queryForArticleFetchVar(),
+                    [props.type]: undefined,
+                  });
                 }
               }}
               onMenuOpen={() => setIsOpen(true)}

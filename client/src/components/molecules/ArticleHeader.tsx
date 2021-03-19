@@ -3,6 +3,7 @@ import {
   Item,
   ProgressCircle,
   Text,
+  View,
 } from '@adobe/react-spectrum';
 import { useReactiveVar } from '@apollo/client';
 import { Flex, Grid } from '@react-spectrum/layout';
@@ -29,8 +30,10 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = (
   return (
     <Flex alignContent={'baseline'} justifyContent={'space-between'}>
       <ArticleTitle text={props.name} />
-      <Flex alignSelf={'center'} gap={'size-100'}>
-        {props.isFetching ? <ProgressCircle isIndeterminate /> : <></>}
+      <Flex gap={'size-100'} height={'single-line-height'}>
+        <View width={'size-500'}>
+          {props.isFetching ? <ProgressCircle isIndeterminate /> : <></>}
+        </View>
         <ActionButton
           width={'size-600'}
           onPressEnd={() => {

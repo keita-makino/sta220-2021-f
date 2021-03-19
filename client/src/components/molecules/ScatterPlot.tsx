@@ -1,5 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import { Node, ResponsiveScatterPlot } from '@nivo/scatterplot';
+import { xor } from 'lodash';
 import React, { useState } from 'react';
 import {
   articlesFetchedVar,
@@ -107,10 +108,15 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = (
         onMouseMove={(node: Node) => setHovered(node.id)}
         onMouseLeave={() => setHovered(null)}
         onClick={(node: Node) => {
-          selectedArticlesOnDatabaseVar([
-            ...selectedArticlesOnDatabaseVar(),
-            (node.data as any).articleId,
-          ]);
+          const newId = (node.data as any).articleId;
+          const newArray = xor(selectedArticlesOnDatabaseVar(), [newId]);
+          selectedArticlesOnDatabaseVar(newArray);
+          currentIndexVar(
+            Math.max(
+              newArray.findIndex((item) => item === newId),
+              0
+            )
+          );
         }}
         tooltip={({ node }) => (
           <div>
