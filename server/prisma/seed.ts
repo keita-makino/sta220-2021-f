@@ -21,7 +21,7 @@ const seed = async () => {
                   count: 500,
                   attributes:
                     "D,CC,AA.DAuN,AA.AuId,DN,Id,S,F.DFN,F.FId,FP,J.JId,J.JN,IA,FamId",
-                  "subscription-key": "fe20f3c2bcfa444d97e94a36b3af07c8",
+                  "subscription-key": process.env.API_KEY,
                 },
               }
             )
@@ -91,8 +91,12 @@ const seedArticle = async (articles: Article[]) => {
 };
 
 const getEmbedding = async (abstracts: string[]) => {
-  return (await Axios.post("http://localhost:7071/api/HttpTrigger1", abstracts))
-    .data;
+  return (
+    await Axios.post(
+      process.env.FUNCTION_URL || "http://localhost:7071/api/HttpTrigger1",
+      abstracts
+    )
+  ).data;
 };
 
 const createAbstract = (invertedAbstract: Article["IA"]) => {

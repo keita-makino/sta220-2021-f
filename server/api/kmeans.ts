@@ -4,7 +4,7 @@ import { minBy, maxBy } from "lodash";
 export const kmeans = async (req, res) => {
   const { vec, prl } = (
     await axios.post(
-      "http://localhost:60952/score",
+      "http://bdb38480-5653-49f0-8b67-3c6921094b96.westus.azurecontainer.io/score",
       {
         data: req.body.data,
       },

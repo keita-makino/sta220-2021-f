@@ -49,7 +49,7 @@ service <- deploy_model(
 
 wait_for_deployment(service, show_output = TRUE)
 
-service_name <- "webservice001"
+service_name <- "webservice002"
 service <- deploy_model(
     ws,
     service_name,

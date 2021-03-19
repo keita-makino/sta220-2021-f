@@ -1,6 +1,6 @@
 getKmeans <- function(k) {
   client <- GraphqlClient$new(
-    url = "http://127.0.0.1:4000/graphql"
+    url = "https://sta220-2021-f.herokuapp.com/graphql"
   )
   qry <- Query$new()
   qry$query(
