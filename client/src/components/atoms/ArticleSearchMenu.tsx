@@ -1,6 +1,7 @@
 import { Form, Flex, Text } from '@adobe/react-spectrum';
 import React, { useEffect, useState } from 'react';
 import {
+  currentIndexVar,
   isDarkVar,
   isLoadingVar,
   queryForArticleFetchVar,
@@ -86,6 +87,7 @@ export const ArticleSearchMenu: React.FC<ArticleSearchMenuProps> = (
                       .find((item: any) => item.id === key.value)
                       .articles.map((item: any) => item.id),
                   });
+                  currentIndexVar(0);
                 }
               }}
               onMenuOpen={() => setIsOpen(true)}

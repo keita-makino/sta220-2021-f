@@ -36,8 +36,8 @@ export { defaultValue as ArticleDetailsDefaultValue };
 export type ArticleDetailsProps = Props;
 
 const getArticleDetails = gql`
-  query($where: [String]) {
-    multipleArticles(where: $where) {
+  query($where: ArticleWhereUniqueInput!) {
+    article(where: $where) {
       id
       name
       authors {
@@ -74,17 +74,18 @@ const onClick = (type: string, item: any) => {
     ...queryForArticleFetchVar(),
     [type]: item.articles.map((item: any) => item.id),
   });
+  currentIndexVar(0);
 };
 
 export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
   const props = (defaultValue && _props) as Props;
   const selectedArticles = useReactiveVar(selectedArticlesOnDatabaseVar);
+  const current = useReactiveVar(currentIndexVar);
   const { data } = useQuery(getArticleDetails, {
     variables: {
-      where: selectedArticles,
+      where: { id: selectedArticles[current] || 'nothing' },
     },
     onCompleted: () => {
-      currentIndexVar(selectedArticles.length - 1);
       setTimeout(
         () => isLoadingVar({ ...isLoadingVar(), articleDetails: false }),
         500
@@ -92,10 +93,9 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
     },
   });
   const isLoading = useReactiveVar(isLoadingVar)['articleDetails'];
-  const current = useReactiveVar(currentIndexVar);
+  const [isFetching, setIsFetching] = useState(false);
 
   const [article, setArticle] = useState<ArticleInternal | null>(null);
-
   useEffect(() => {
     isLoadingVar({
       ...isLoadingVar(),
@@ -105,19 +105,25 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
 
   useEffect(() => {
     if (data) {
-      setArticle(data.multipleArticles[current]);
+      setArticle(data.article);
+
       if (isLoadingVar()['articleListDatabase']) {
         isLoadingVar({ ...isLoadingVar(), articleListDatabase: false });
       }
+      if (isFetching) setIsFetching(false);
     }
-  }, [current, data]);
+  }, [current, data, isFetching]);
 
   return (
     <LoadedScreen loading={isLoading}>
       <Grid height={'100%'}>
         {article ? (
           <Grid rows={['size-800', '0.5rem', 'auto']} width={'100%'}>
-            <ArticleHeader {...article} />
+            <ArticleHeader
+              {...article}
+              isFetching={isFetching}
+              setIsFetching={setIsFetching}
+            />
             <Divider size={'S'} />
             <Scrollbar>
               <Grid

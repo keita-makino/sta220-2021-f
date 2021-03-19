@@ -26,7 +26,6 @@ export const ArticleListItem: React.FC<ArticleListItemProps> = (
         setCompleted(true);
       }, 1000);
     }
-    console.log(completed, props.item.status);
   }, [completed, props.item.status]);
 
   return (

@@ -25,7 +25,9 @@ export type ArticleListDatabaseProps = Props;
 
 const onClick = (id?: string) => {
   if (id) {
-    selectedArticlesOnDatabaseVar(xor(selectedArticlesOnDatabaseVar(), [id]));
+    const newArray = xor(selectedArticlesOnDatabaseVar(), [id]);
+    selectedArticlesOnDatabaseVar(newArray);
+    currentIndexVar(newArray.length - 1);
   }
 };
 

@@ -1,9 +1,14 @@
-import { ActionButton, Item, Text } from '@adobe/react-spectrum';
+import {
+  ActionButton,
+  Item,
+  ProgressCircle,
+  Text,
+} from '@adobe/react-spectrum';
 import { useReactiveVar } from '@apollo/client';
 import { Flex, Grid } from '@react-spectrum/layout';
 import ChevronLeft from '@spectrum-icons/workflow/ChevronLeft';
 import ChevronRight from '@spectrum-icons/workflow/ChevronRight';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import {
   currentIndexVar,
   selectedArticlesOnDatabaseVar,
@@ -11,7 +16,10 @@ import {
 import { ArticleInternal } from '../../types/Article';
 import { ArticleTitle } from '../atoms/ArticleTitle';
 
-type ArticleHeaderProps = ArticleInternal & {};
+type ArticleHeaderProps = ArticleInternal & {
+  isFetching: boolean;
+  setIsFetching: Dispatch<SetStateAction<boolean>>;
+};
 
 export const ArticleHeader: React.FC<ArticleHeaderProps> = (
   props: ArticleHeaderProps
@@ -22,9 +30,13 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = (
     <Flex alignContent={'baseline'} justifyContent={'space-between'}>
       <ArticleTitle text={props.name} />
       <Flex alignSelf={'center'} gap={'size-100'}>
+        {props.isFetching ? <ProgressCircle isIndeterminate /> : <></>}
         <ActionButton
           width={'size-600'}
-          onPressEnd={() => currentIndexVar(current - 1)}
+          onPressEnd={() => {
+            currentIndexVar(current - 1);
+            props.setIsFetching(true);
+          }}
           isDisabled={current === 0}
         >
           <ChevronLeft />
@@ -36,7 +48,10 @@ export const ArticleHeader: React.FC<ArticleHeaderProps> = (
         </Flex>
         <ActionButton
           width={'size-600'}
-          onPressEnd={() => currentIndexVar(current + 1)}
+          onPressEnd={() => {
+            currentIndexVar(current + 1);
+            props.setIsFetching(true);
+          }}
           isDisabled={length - 1 === current}
         >
           <ChevronRight />
