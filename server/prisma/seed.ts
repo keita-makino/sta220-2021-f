@@ -91,12 +91,7 @@ const seedArticle = async (articles: Article[]) => {
 };
 
 const getEmbedding = async (abstracts: string[]) => {
-  return (
-    await Axios.post(
-      process.env.FUNCTION_URL || "http://localhost:7071/api/HttpTrigger1",
-      abstracts
-    )
-  ).data;
+  return (await Axios.post(process.env.FUNCTION_URL, abstracts)).data;
 };
 
 const createAbstract = (invertedAbstract: Article["IA"]) => {
