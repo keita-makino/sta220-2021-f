@@ -6,6 +6,8 @@ import {
   Heading,
   IllustratedMessage,
   ProgressCircle,
+  Flex,
+  View,
 } from '@adobe/react-spectrum';
 import React, { useEffect } from 'react';
 import {
@@ -20,6 +22,8 @@ import { ArticleExternal } from '../../types/Article';
 import { ArticleListItem } from '../atoms/ArticleListItem';
 import { xor } from 'lodash';
 import GlobeSearch from '@spectrum-icons/workflow/GlobeSearch';
+import Scrollbar from 'react-scrollbars-custom';
+import { LoadedScreen } from './LoadedScreen';
 
 type PropsBase = {};
 export const defaultValue: Required<
@@ -88,37 +92,44 @@ export const ArticleListSearch: React.FC<PropsBase> = (_props: PropsBase) => {
       setTimeout(() => isLoadingVar({ ...isLoadingVar(), search: false }), 500)
     );
   }, [options]);
+  const isLoading = useReactiveVar(isLoadingVar)['search'];
 
   return (
-    <Grid width={'100%'} gap={'size-75'}>
-      {list ? (
-        list.length === 0 ? (
-          <IllustratedMessage marginTop={'size-400'}>
-            <GlobeSearch color={'notice'} size={'XXL'} />
-            <Heading>Search</Heading>
-            <Text>
-              Search articles on{' '}
-              <a
-                href={'https://academic.microsoft.com/home'}
-                target={'_blank'}
-                rel={'noreferrer'}
-              >
-                Microsoft Academic
-              </a>
-              .
-            </Text>
-          </IllustratedMessage>
-        ) : (
-          list.map((item) => (
-            <ArticleListItem
-              item={item}
-              type={'search'}
-              onClick={onClick}
-              selected={selectedList.includes(item.Id)}
-            />
-          ))
-        )
-      ) : null}
+    <Grid height={'100%'} width={'100%'}>
+      <LoadedScreen loading={isLoading}>
+        {list ? (
+          list.length === 0 ? (
+            <IllustratedMessage>
+              <GlobeSearch color={'notice'} size={'XXL'} />
+              <Heading>Search</Heading>
+              <Text>
+                Search articles on{' '}
+                <a
+                  href={'https://academic.microsoft.com/home'}
+                  target={'_blank'}
+                  rel={'noreferrer'}
+                >
+                  Microsoft Academic
+                </a>
+                .
+              </Text>
+            </IllustratedMessage>
+          ) : (
+            <Scrollbar>
+              <Grid height={'100%'} width={'100%'} gap={'size-75'}>
+                {list.map((item) => (
+                  <ArticleListItem
+                    item={item}
+                    type={'search'}
+                    onClick={onClick}
+                    selected={selectedList.includes(item.Id)}
+                  />
+                ))}
+              </Grid>
+            </Scrollbar>
+          )
+        ) : null}
+      </LoadedScreen>
     </Grid>
   );
 };

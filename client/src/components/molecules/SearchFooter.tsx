@@ -62,6 +62,10 @@ const onClick = (
           where: { id: element.id },
           create: element,
         },
+      }).then(() => {
+        const item = internalArrayPermanent[i];
+        delete item.status;
+        articlesFetchedVar(unionBy([item], articlesFetchedVar(), 'id'));
       });
     }
   };

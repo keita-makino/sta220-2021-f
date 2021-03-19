@@ -121,6 +121,7 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
             <Divider size={'S'} />
             <Scrollbar>
               <Grid
+                width={'100%'}
                 columns={['size-2000', 'auto']}
                 columnGap={'size-200'}
                 rowGap={'size-100'}
@@ -141,7 +142,7 @@ export const ArticleDetails: React.FC<PropsBase> = (_props: PropsBase) => {
                 >
                   Authors:
                 </View>
-                <Flex gap={'size-50'}>
+                <Flex gap={'size-50'} wrap>
                   {article.authors.map((item: any) => (
                     <ActionButton onPressEnd={() => onClick('author', item)}>
                       {item.name}

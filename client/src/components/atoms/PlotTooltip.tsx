@@ -2,32 +2,17 @@ import React from 'react';
 import { Node } from '@nivo/scatterplot';
 import { Flex, Heading, View } from '@adobe/react-spectrum';
 import { gql, useQuery } from '@apollo/client';
+import { articlesFetchedVar } from '../../localState';
 
 export type PlotTooltipProps = any;
-
-const query = gql`
-  query($id: String) {
-    article(where: { id: $id }) {
-      name
-    }
-  }
-`;
-
-const useArticleInfo = (id: string) => {
-  const { data } = useQuery(query, {
-    variables: {
-      id: id,
-    },
-  });
-  return data;
-};
 
 export const PlotTooltip: React.FC<PlotTooltipProps> = (
   props: PlotTooltipProps
 ) => {
-  const data = useArticleInfo(props.data.articleId);
-
-  return data ? (
+  const name = articlesFetchedVar().find(
+    (item) => item.id === props.data.articleId
+  )?.name;
+  return (
     <View
       width={'size-3000'}
       minHeight={'size-300'}
@@ -38,8 +23,8 @@ export const PlotTooltip: React.FC<PlotTooltipProps> = (
       }}
     >
       <Heading level={5} margin={'size-0'}>
-        {data.article?.name}
+        {name}
       </Heading>
     </View>
-  ) : null;
+  );
 };

@@ -25,7 +25,6 @@ export type SidebarProps = Props;
 
 export const Sidebar: React.FC<PropsBase> = (_props: PropsBase) => {
   const props = (defaultValue && _props) as Props;
-  const isLoading = useReactiveVar(isLoadingVar)['search'];
 
   if (!props.type) return null;
   return (
@@ -46,11 +45,7 @@ export const Sidebar: React.FC<PropsBase> = (_props: PropsBase) => {
       <Divider size={'S'} />
       {props.type === 'search' ? (
         <>
-          <LoadedScreen loading={isLoading}>
-            <Scrollbar>
-              <ArticleListSearch />
-            </Scrollbar>
-          </LoadedScreen>
+          <ArticleListSearch />
           <Divider size={'S'} />
           <View alignSelf={'flex-end'}>
             <SearchFooter />

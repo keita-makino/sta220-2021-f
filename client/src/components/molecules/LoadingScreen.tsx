@@ -41,8 +41,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = (
       }}
     >
       <Grid
-        height={props.dimension.height}
-        width={props.dimension.width}
+        height={'100%'}
+        width={'100%'}
         alignContent={'center'}
         justifyContent={'center'}
         position={'absolute'}

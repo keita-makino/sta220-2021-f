@@ -1,5 +1,5 @@
-import { ActionButton, Text, View } from '@adobe/react-spectrum';
-import React from 'react';
+import { ActionButton, StatusLight, Text, View } from '@adobe/react-spectrum';
+import React, { useEffect, useState } from 'react';
 import { ArticleExternal, ArticleInternal } from '../../types/Article';
 import Checkmark from '@spectrum-icons/workflow/Checkmark';
 import { schemeSet2 } from 'd3-scale-chromatic';
@@ -15,13 +15,27 @@ export type ArticleListItemProps = {
 export const ArticleListItem: React.FC<ArticleListItemProps> = (
   props: ArticleListItemProps
 ) => {
+  const [completed, setCompleted] = useState(true);
+
+  useEffect(() => {
+    if (props.item.status === 'notReady') {
+      setCompleted(false);
+    }
+    if (!completed && props.item.status === undefined) {
+      setTimeout(() => {
+        setCompleted(true);
+      }, 1000);
+    }
+    console.log(completed, props.item.status);
+  }, [completed, props.item.status]);
+
   return (
     <ActionButton
       onPressEnd={() =>
         props.onClick(props.item[props.type === 'search' ? 'Id' : 'id'])
       }
       isDisabled={
-        props.type === 'search' ? false : props.item.status === 'notReady'
+        props.type === 'search' ? false : props.item.status !== undefined
       }
       UNSAFE_style={{
         backgroundColor:
@@ -36,6 +50,15 @@ export const ArticleListItem: React.FC<ArticleListItemProps> = (
         {props.item[props.type === 'search' ? 'DN' : 'name']}
       </Text>
       {props.selected ? <Checkmark color={'positive'} /> : null}
+      {props.item.status === 'notReady' ? (
+        <StatusLight variant={'neutral'} alignSelf={'center'} />
+      ) : null}
+      {props.item.status === 'embedded' ? (
+        <StatusLight variant={'notice'} alignSelf={'center'} />
+      ) : null}
+      {props.item.status === undefined && !completed ? (
+        <StatusLight variant={'info'} alignSelf={'center'} />
+      ) : null}
     </ActionButton>
   );
 };

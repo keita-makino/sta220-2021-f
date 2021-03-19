@@ -4,10 +4,13 @@ const hotLodaer = require('react-app-rewire-hot-loader');
 module.exports = function override(config, env) {
   config = hotLodaer(config, env);
 
-  config.resolve.alias = {
-    ...config.resolve.alias,
-    'react-dom': '@hot-loader/react-dom'
-  };
+  config.module.rules = [
+    ...config.module.rules,
+    {
+      test: /react-spring/,
+      sideEffects: true,
+    },
+  ];
 
   return config;
 };

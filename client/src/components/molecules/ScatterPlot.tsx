@@ -91,12 +91,12 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = (
           max: plotData.range.yMax,
         }}
         axisBottom={{
-          legend: `PC1: ${plotData.prl[0] * 100}%`,
+          legend: `PC1: ${Math.round(plotData.prl[0] * 10000) / 100}%`,
           legendPosition: 'middle',
           legendOffset: 50,
         }}
         axisLeft={{
-          legend: `PC2: ${plotData.prl[1] * 100}%`,
+          legend: `PC2: ${Math.round(plotData.prl[1] * 10000) / 100}%`,
           legendPosition: 'middle',
           legendOffset: -50,
         }}

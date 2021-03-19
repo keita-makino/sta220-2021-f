@@ -38,11 +38,7 @@ const deleteSelectedArticlesOnDatabase = (
   ) => Promise<FetchResult<any, Record<string, any>, Record<string, any>>>
 ) => () => {
   const array = selectedArticlesOnDatabaseVar();
-  const list = articlesFetchedVar().map((item) => ({
-    ...item,
-    status: array.includes(item.id) ? 'notReady' : undefined,
-  }));
-  articlesFetchedVar(list);
+  const list = articlesFetchedVar();
   mutation({
     variables: {
       where: array.map((item) => item.toString()),
