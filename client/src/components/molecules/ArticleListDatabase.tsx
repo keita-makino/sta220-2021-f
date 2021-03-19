@@ -55,6 +55,8 @@ export const ArticleListDatabase: React.FC<PropsBase> = (_props: PropsBase) => {
       selectedArticlesOnDatabaseVar(
         intersection(array.reduce((prev, curr) => intersection(prev, curr)))
       );
+    } else {
+      selectedArticlesOnDatabaseVar([]);
     }
   }, [options]);
 

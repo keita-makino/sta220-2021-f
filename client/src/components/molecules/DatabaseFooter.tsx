@@ -78,6 +78,7 @@ export const DatabaseFooter: React.FC<DatabaseFooterProps> = (
           selectedArticlesOnDatabaseVar([]);
           selectedFilterVar({});
           queryForArticleFetchVar({});
+          plotLaunchVar(0);
         }}
       >
         <Erase />

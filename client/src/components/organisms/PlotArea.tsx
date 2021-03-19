@@ -43,6 +43,9 @@ export const usePlotData = (
       fetch().then(() =>
         setTimeout(() => isLoadingVar({ ...isLoadingVar(), plot: false }), 1000)
       );
+    } else if (plotLaunch < currentLaunch) {
+      setcurrentLaunch(0);
+      setValue(null);
     }
   }, [currentLaunch, plotLaunch]);
   return value;
