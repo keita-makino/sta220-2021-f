@@ -6,7 +6,6 @@ import axios from "axios";
 import cors from "cors";
 import { kmeans } from "./kmeans";
 
-require("dotenv").config();
 const apollo = new ApolloServer({ schema, context: createContext });
 const app = express();
 
