@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "outDir": "dist",
+    "sourceMap": true,
+    "strict": false,
+    "lib": [
+      "ESNext"
+    ],
+    "rootDir": ".",
+    "plugins": [
+      {
+        "name": "nexus/typescript-language-service"
+      }
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "types"
+    ],
+    "esModuleInterop": true
+  },
+  "include": [
+    "types.d.ts",
+    "api",
+    "prisma"
+  ]
+}
