@@ -1,5 +1,12 @@
 import ArrowUpRight from '@spectrum-icons/workflow/ArrowUpRight';
-import { Text, Button } from '@adobe/react-spectrum';
+import {
+  Text,
+  Button,
+  Flex,
+  ActionButton,
+  TooltipTrigger,
+  Tooltip,
+} from '@adobe/react-spectrum';
 import React from 'react';
 import {
   FetchResult,
@@ -12,7 +19,6 @@ import {
 import {
   articlesFetchedVar,
   articlesSearchedVar,
-  selectedArticlesOnDatabaseVar,
   selectedArticlesOnSearchVar,
 } from '../../localState';
 import { ArticleExternal } from '../../types/Article';
@@ -21,7 +27,8 @@ import {
   externalToInternalTemporal,
   internalToMutation,
 } from '../../utils';
-import { union, unionBy, uniqBy } from 'lodash';
+import { unionBy, uniqBy } from 'lodash';
+import AlertCircle from '@spectrum-icons/workflow/AlertCircle';
 
 export type SearchFooterProps = {};
 
@@ -79,9 +86,19 @@ export const SearchFooter: React.FC<SearchFooterProps> = (
   const [mutation] = useMutation(upsertOneArticle);
 
   return (
-    <Button variant={'cta'} onPressEnd={onClick(list, selected, mutation)}>
-      <ArrowUpRight />
-      <Text>Add Articles to the List</Text>
-    </Button>
+    <Flex alignItems={'center'} gap={'size-100'}>
+      <TooltipTrigger delay={0}>
+        <ActionButton isQuiet>
+          <AlertCircle />
+        </ActionButton>
+        <Tooltip>
+          Adding articles for the first time in the app may take a while.
+        </Tooltip>
+      </TooltipTrigger>
+      <Button variant={'cta'} onPressEnd={onClick(list, selected, mutation)}>
+        <ArrowUpRight />
+        <Text>Add Articles to the List</Text>
+      </Button>
+    </Flex>
   );
 };
